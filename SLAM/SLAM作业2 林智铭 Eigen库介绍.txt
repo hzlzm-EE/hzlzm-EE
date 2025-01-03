@@ -1,0 +1,33 @@
+《视觉SLAM十四讲》第二章中关于Eigen库的使用方法的总结：
+
+1. **安装Eigen库**：
+   - 在Ubuntu系统中，可以通过命令`sudo apt install libeigen3-dev`来安装Eigen库。
+   - 安装后，可以通过`locate eigen3`查找库的位置，通常位于`/usr/include/eigen3`。
+
+2. **包含Eigen头文件**：
+   - 在程序中使用Eigen库时，需要包含相关的头文件。可以通过`#include <eigen3/Eigen/Core>`来包含核心部分，或者`#include <Eigen/Core>`如果已经将Eigen目录移动到`/usr/include`中。
+   - 也可以在CMakeLists.txt中添加库路径：`include_directories( "/usr/include/eigen3" )`。
+
+3. **基本矩阵和向量运算**：
+   - Eigen中所有向量和矩阵都是`Eigen::Matrix`，它是一个模板类，前三个参数为数据类型、行、列。例如，`Matrix<float, 2, 3> matrix_23;`声明了一个2x3的float矩阵。
+   - 可以使用`<<`运算符来初始化矩阵和向量，例如`matrix_23 << 1, 2, 3, 4, 5, 6;`。
+
+4. **矩阵运算**：
+   - 可以进行矩阵的乘法、转置、求和、迹运算等，例如`matrix_33.transpose()`、`matrix_33.sum()`、`matrix_33.trace()`。
+   - 矩阵分解和求解线性方程组，例如使用`colPivHouseholderQr()`进行QR分解，然后使用`solve()`求解方程组。
+
+5. **几何变换**：
+   - 使用`Eigen::Isometry3d`进行欧氏变换，它是一个4x4矩阵，可以表示旋转和平移。
+   - 可以使用`rotate()`和`pretranslate()`方法来设置旋转和平移。
+
+6. **四元数和旋转**：
+   - 使用`Eigen::Quaterniond`表示四元数，可以直接从旋转向量`Eigen::AngleAxisd`或旋转矩阵`Eigen::Matrix3d`转换得到。
+   - 四元数可以用来表示旋转，并且可以与向量进行乘法运算来实现旋转。
+
+7. **欧拉角**：
+   - 可以将旋转矩阵直接转换成欧拉角，使用`eulerAngles(2, 1, 0)`方法，其中参数代表ZYX顺序，即yaw-pitch-roll顺序。
+
+8. **仿射和射影变换**：
+   - 对于仿射变换，使用`Eigen::Affine3d`；对于射影变换，使用`Eigen::Projective3d`。
+
+这些是Eigen库在SLAM中的基本使用方法，涵盖了从基本的矩阵和向量运算到复杂的几何变换和四元数操作。Eigen库因其高效和易于使用，在SLAM领域中得到了广泛的应用。
